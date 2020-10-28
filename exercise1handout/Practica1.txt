@@ -1,0 +1,47 @@
+Practica 1
+
+	
+ En esta práctica vamos a trabajar transformaciones con vectores y matrices.
+ 
+  en el código de exercise1.h
+  
+  están los métodos init(), update() y terminate() que controlan el ciclo de ejecución
+  init y terminate se ejecutan una vez al principio y al final.
+  update() se ejecuta en cada frame.
+  
+  1. comprueba que al ejecutar delante de la cámara se encuentra un cubo.
+  2. cambia el valor de la posición (inicial) de la cámara [la variable cameraPosition en init()] a varios sitios, hacia los lados izquierda y derecha, así como arriba y abajo:
+  
+	- ¿Sobre qué eje [x,y o z] tienes que actuar en cada caso?
+      
+	en el código aparece:
+	
+		cameraMatrix = translate(identity_mat4(), cameraPosition*-1.f);
+				
+	¿por qué se multiplica cameraPosition por -1.f?
+   
+	un poco más abajo la cámara se envía al shader en:
+	 
+	 	camera.set_shader_data(lines_shader_index, cameraMatrix);
+		
+	comprueba cómo le llega la información al shader. Revisa el shader (vertex) lines_vs.glsl. ¿Cómo utiliza la matriz de la cámara en el shader?
+	
+		 	   
+  3. utiliza el input de teclas en update() para mover la cámara de la siguiente forma:
+  
+		if (glfwGetKey(window, GLFW_KEY_DOWN)) {
+			cameraPosition = ...;
+		}
+		
+	 varía el código anterior para que el movimiento no dependa de la velocidad del ordenador, sino del tiempo que pasa (pista: usa el tiempo entre frames elapsed_seconds). Por ejemplo: mueve la cámara tres unidades por segundo.
+	 
+    
+  4. haz que el cubo se traslade hacia la derecha cuando pulses la tecla d. Para ello debes actuar sobre la variable cubeMatrix. 
+
+  5. una vez hayas conseguido que se traslade, intenta que rote en la dirección de traslación, como si rodara. Para ello utiliza las funciones en math_utils.h que consideres. En especial puedes utilizar rotate_z_deg.
+  
+  6. amplia el código que crea las flechas del eje de referencias x,y,z (roja, verde y azul) para que se entienda dónde empieza y donde acaba. Debes modificar el código que se encuentra en Shapes::addArrow(), que se llama en init(). Para ello:
+	
+	Añade, además de la linea presente que va de origen (from) a final (to), una punta de cuatro aristas en el extremo. Utiliza las rutinas cross y dot, el vector up (0,1,0), así como el escalado de vectores para encontrar las 4 posiciones adicionales que forma la punta junto con ¿se te ocurre cómo? 
+	
+	Recuerda que para encontrar las posiciones de las aristas de la punta, puedes utilizar perpendiculares a la flecha en las direcciones arriba, abajo, izquierda y derecha.
