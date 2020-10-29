@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="gl_utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="maths_funcs.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="lineshapes.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>3D</Filter>
+    </ClCompile>
+    <ClCompile Include="exercise2.cpp">
+      <Filter>Exercises</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gl_utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="maths_funcs.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="lineshapes.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>3D</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="exercise2.h">
+      <Filter>Exercises</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lines_fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="lines_vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="test_fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="test_vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{0ca33903-ec0a-4e04-ad19-83ca8ea6f199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{bb724b5a-51d5-4bc8-b018-53a660a0fbfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{834f2ccd-2592-46a9-8d0a-acca30d5ea07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D">
+      <UniqueIdentifier>{e5acc061-e271-460c-a260-2324ccb86daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exercises">
+      <UniqueIdentifier>{24946da4-903c-493d-b832-535fa07b588a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
