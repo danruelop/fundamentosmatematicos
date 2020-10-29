@@ -21,6 +21,8 @@ struct Exercise1 {
 
 	Lines cubeLines;
 	mat4 cubeMatrix;
+	mat4 cubeMatrixT;
+	mat4 cubeMatrixR;
 	vec3 cubePosition;
 
 	Lines referenceFrameLines;
@@ -100,6 +102,7 @@ struct Exercise1 {
 		camera.yaw_speed = 120.f;
 
 		cameraMatrix = identity_mat4();
+		
 
 		// 1.¿Sobre qué eje [x,y o z] tienes que actuar en cada caso?
 		// la posición de la cámara depende de un vector de 3 dimensiones con 3 variables.
@@ -141,8 +144,12 @@ struct Exercise1 {
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_D)) {
-			cubePosition.x += 1 * elapsed_seconds;
-			rotate_z_deg(cubeMatrix, 20.0f);
+
+			cubePosition.x += 1 * elapsed_seconds *3;
+			cubeMatrixT = translate(cubeMatrix, cubePosition);
+			cubeMatrixR = rotate_z_deg(cubeMatrix, 0.01f);
+			// esto no vale cubeMatrix = cubeMatrixT * cubeMatrixR;
+		
 			
 
 		}
@@ -160,7 +167,7 @@ struct Exercise1 {
 		cameraMatrix = translate(identity_mat4(), cameraPosition*-1.f);
 
 		// TODO: change following line to translate and rotate cube
-		cubeMatrix = translate(identity_mat4(), cubePosition);
+		//cubeMatrix = translate(identity_mat4(), cubePosition);
 
 		glUseProgram(lines_shader_index);
 
