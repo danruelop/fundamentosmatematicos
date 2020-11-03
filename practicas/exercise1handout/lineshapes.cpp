@@ -86,7 +86,8 @@ void Lines::render(GLuint shader_programme)
 	glBindVertexArray(0);
 }
 
-void Shapes::addArrow(Lines & lines, const vec3 & from, const vec3 & to, const vec3 & color)
+vec3 vecUP = vec3(0, 1, 0);
+void Shapes::addArrow(Lines& lines, const vec3& from, const vec3& to, const vec3& color)
 {
 	// TODO: change following code to draw arrow point
 	// remember: to obtain a perpendicular to vector to-from, you can use cross(to-from, up)
@@ -94,21 +95,57 @@ void Shapes::addArrow(Lines & lines, const vec3 & from, const vec3 & to, const v
 	// add your new positions to arrow_vertices, then the corresponding arrow_colors
 	// finally draw lines with indices arrow_indices
 
+	vec3 a = to - from;
+	vec3 perp1;
+
+	if (to.x == 0 && to.z == 0)
+	{
+		perp1 = cross(a, vec3(1, 0, 0));
+	}
+	else
+	{
+		perp1 = cross(a, vecUP);
+	}
+
+	vec3 perp2 = cross(a, perp1);
+
+	vec3 aLength = normalise(a) * 0.9;
+
+	vec3 p1 = aLength + from + perp1 * 0.1;
+	vec3 p2 = aLength + from - perp1 * 0.1;
+	vec3 p3 = aLength + from + perp2 * 0.1;
+	vec3 p4 = aLength + from - perp2 * 0.1;
+
+
 	vec3 arrow_vertices[] = {
-		from,
-		to,
+	from,
+	to,
+	p1,
+	p2,
+	p3,
+	p4,
 	};
-	
+
 	vec3 arrow_colors[] = {
-		color,
-		color,
+	color,
+	color,
+	color,
+	color,
+	color,
+	color,
 	};
 
 	unsigned int arrow_indices[] = {
-		0,1, // draw line from arrow_vertices[0] to arrow_vertices[1]
+	0,1, // draw line from arrow_vertices[0] to arrow_vertices[1]
+	1,2,
+	1,3,
+	1,4,
+	1,5,
 	};
 
+	
 	lines.add(&arrow_vertices[0].v[0], &arrow_colors[0].v[0], 2, &arrow_indices[0], 2);
+	lines.add(&arrow_vertices[0].v[0], &arrow_colors[0].v[0], 6, &arrow_indices[2], 10); // línea p1
 }
 
 void Shapes::addGrid(Lines& lines, const vec3& from, const vec3& to, const vec3& color, int divs) {

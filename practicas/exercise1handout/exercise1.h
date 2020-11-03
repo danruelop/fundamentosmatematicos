@@ -24,6 +24,7 @@ struct Exercise1 {
 	mat4 cubeMatrixT;
 	mat4 cubeMatrixR;
 	vec3 cubePosition;
+	float rotation;
 
 	Lines referenceFrameLines;
 	mat4 referenceFrameMatrix;
@@ -139,20 +140,39 @@ struct Exercise1 {
 		// 4. utiliza el input de teclas en update() para mover la cámara de la siguiente forma:
 		// 5. varía el código anterior para que el movimiento no dependa de la velocidad del ordenador, sino del tiempo que pasa (pista: usa el tiempo entre frames elapsed_seconds). 
 		// Por ejemplo: mueve la cámara tres unidades por segundo.
+
 		if (glfwGetKey(window, GLFW_KEY_DOWN)) {
 			cameraPosition.y -= 1 *elapsed_seconds*3;
 		}
+		if (glfwGetKey(window, GLFW_KEY_UP)) {
+			cameraPosition.y += 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
+			cameraPosition.x += 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT)) {
+			cameraPosition.x -= 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_Q)) {
+			cameraPosition.z -= 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_E)) {
+			cameraPosition.z += 1 * elapsed_seconds * 3;
+		}
 
 		if (glfwGetKey(window, GLFW_KEY_D)) {
-
-			cubePosition.x += 1 * elapsed_seconds *3;
-			cubeMatrixT = translate(cubeMatrix, cubePosition);
-			cubeMatrixR = rotate_z_deg(cubeMatrix, 0.01f);
-			// esto no vale cubeMatrix = cubeMatrixT * cubeMatrixR;
+			rotation += 5.f;
+			cubePosition.x += 3 * elapsed_seconds;
+			
+			cubeMatrixT = translate(identity_mat4(), cubePosition);
+			cubeMatrixR = rotate_z_deg(identity_mat4(), rotation);
+			cubeMatrix = cubeMatrixT * cubeMatrixR;
 		
 			
 
 		}
+		
+
 		
 
 		glfwPollEvents();
