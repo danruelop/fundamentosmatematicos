@@ -198,6 +198,8 @@ struct Exercise2 {
 
 		// TODO: 
 		// camNode.rotation = quat_from_axis_deg(...)* ...;
+
+		camNode.rotation = quat_from_axis_deg(camPitch,1, 0, 0) * quat_from_axis_deg(camYaw,0, 1, 0);
 		
 		// TODO: use keys to modify cameraPosition here
 
@@ -247,11 +249,11 @@ struct Exercise2 {
 		
 		camera.get_shader_uniforms(lines_shader_index);
 		camera.set_shader_uniforms(mesh_shader_index, cameraMatrix );
-		// TODO: camera.set_shader_uniforms(lines_shader_index, ...);
+		camera.set_shader_uniforms(lines_shader_index, camNode.worldInverseMatrix);
 		
 
 		grid.get_shader_uniforms(lines_shader_index);
-		//TODO: grid.set_shader_uniforms(lines_shader_index, ...);
+		grid.set_shader_uniforms(lines_shader_index, camNode.worldInverseMatrix);
 
 		grid.set_shader_uniforms(lines_shader_index, gridMatrix);
 		grid.render(lines_shader_index);
