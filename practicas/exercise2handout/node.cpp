@@ -6,9 +6,10 @@ Node::Node()
 { ; }
 
 void Node::init() { 
+
 	position = vec3(0, 0, 0);
-	rotation = versor(0,0,0,1);
-	scale = vec3(1,1,1);
+	rotation = versor(0, 0, 0, 1);
+	scale = vec3(1, 1, 1);
 
 	localMatrix = identity_mat4();
 	worldMatrix = identity_mat4();
@@ -31,8 +32,22 @@ void Node::removeChild(Node& node) {
 
 void  Node::updateLocal() 
 { 
-	//localMatrix = T*R*S;
-	//localInverseMatrix = Sinv*transpose(R)*Tinv;
+	
+	vec3 positionInv = vec3(-position.x, -position.y, -position.z);
+	vec3 scaleInv = vec3(-scale.x, -scale.y, -scale.z);
+
+	mat4 matrixT = translate(identity_mat4(), position);
+
+	mat4 matrixR = quat_to_mat4(rotation);
+
+	mat4 matrixS = scaler(identity_mat4(), scale);
+
+	mat4 matrixTinv = translate(identity_mat4(), positionInv);
+	mat4 matrixRinv = transpose(matrixR);
+	mat4 matrixSinv = scaler(identity_mat4(), scaleInv);
+
+	localMatrix = matrixT * matrixR * matrixS;
+	localInverseMatrix = matrixSinv * matrixRinv * matrixTinv;
 }
 
 void  Node::updateHierarchy()

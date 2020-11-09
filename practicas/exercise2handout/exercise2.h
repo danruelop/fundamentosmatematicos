@@ -201,6 +201,25 @@ struct Exercise2 {
 		
 		// TODO: use keys to modify cameraPosition here
 
+		if (glfwGetKey(window, GLFW_KEY_DOWN)) {
+			cameraPosition.y -= 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_UP)) {
+			cameraPosition.y += 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
+			cameraPosition.x += 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT)) {
+			cameraPosition.x -= 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_Q)) {
+			cameraPosition.z -= 1 * elapsed_seconds * 3;
+		}
+		if (glfwGetKey(window, GLFW_KEY_E)) {
+			cameraPosition.z += 1 * elapsed_seconds * 3;
+		}
+
 		camNode.position = cameraPosition;
 
 		mat4 cameraMatrix = translate( identity_mat4(), cameraPosition*-1.f);
@@ -215,7 +234,7 @@ struct Exercise2 {
 
 		camera.get_shader_uniforms(mesh_shader_index);
 		camera.set_shader_uniforms(mesh_shader_index, cameraMatrix );
-		// TODO: camera.set_shader_uniforms(lines_shader_index, ...);
+		camera.set_shader_uniforms(lines_shader_index, camNode.worldInverseMatrix);
 		
 
 		meshGroup.set_shader_uniforms(mesh_shader_index,  ambientColor);
@@ -225,9 +244,11 @@ struct Exercise2 {
 
 		glUseProgram(lines_shader_index);
 
+		
 		camera.get_shader_uniforms(lines_shader_index);
 		camera.set_shader_uniforms(mesh_shader_index, cameraMatrix );
 		// TODO: camera.set_shader_uniforms(lines_shader_index, ...);
+		
 
 		grid.get_shader_uniforms(lines_shader_index);
 		//TODO: grid.set_shader_uniforms(lines_shader_index, ...);
