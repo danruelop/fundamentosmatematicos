@@ -224,6 +224,8 @@ struct Exercise2 {
 
 		camNode.position = cameraPosition;
 
+		// Se multiplica por -1 para poder ver el cubo de frente, como si fuera un espejo
+		// Cuánto más aumente el número más se alejará del cubo
 		mat4 cameraMatrix = translate( identity_mat4(), cameraPosition*-1.f);
 		mat4 gridMatrix = translate(identity_mat4(), vec3(0,0,0));
 
@@ -231,6 +233,9 @@ struct Exercise2 {
 
 		// whole scene hierarchy is updated here from root downwards
 		sceneRoot.updateHierarchy();
+
+		// Hay que utilizar la matrix inversa, porque en caso de usar la normal rota todo el diorama
+		// Para rotar el diorama hay que utilizar la matriz normal
 
 		glUseProgram(mesh_shader_index);
 

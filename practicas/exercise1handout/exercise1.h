@@ -182,7 +182,7 @@ struct Exercise1 {
 
 		// TODO: change following line to translate and rotate camera 
 		// 2. ¿Por qué se multiplica cameraPosition por -1.f?
-		// Se multiplica por -1 para poder ver el cubo de frente (?)
+		// Se multiplica por -1 para poder ver el cubo de frente, como si fuera un espejo
 		// Cuánto más aumente el número más se alejará del cubo
 		cameraMatrix = translate(identity_mat4(), cameraPosition*-1.f);
 
