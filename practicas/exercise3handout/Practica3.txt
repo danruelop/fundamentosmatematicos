@@ -1,0 +1,73 @@
+Practica 3
+
+ Intro: profesor explica los espacios de render.
+
+ En esta práctica vamos a trabajar el concepto de jerarquía de transformaciones:
+ 
+  en el código de exercise2.h
+  
+  están los métodos init(), update() y terminate() que controlan el ciclo de ejecución
+  init y terminate se ejecutan una vez al principio y al final
+  update() se ejecuta en cada frame
+  
+  Vamos a realizar una selección de objetos en escena con el ratón.
+  
+  Para realizar la selección tenemos que saber dónde está apuntando la posición del cursor. Pensemos por un momento cómo se puede realizar esto.
+  
+  Si el cursor se define por dos coordenadas x,y (2D), ¿cómo podemos seleccionar en una escena x,y,z (3D)?
+    
+    Recuerda que la escena se ve a través de la cámara, que tiene una posición 3D. Si lanzamos un rayo desde la posición de la cámara en la dirección a la que apunta, podemos hacer intersección en los objetos de la escena. Ahora piensa que el plano de pantalla está por delante de la posición de la cámara. Es una cuadrícula con tantas casillas como pixeles tenga la pantalla. Por tanto tiene que haber una forma de pasar de coordenada de ratón a coordenada 3D utilizando esta idea.
+   
+    
+  
+  1. Observa el vertex shader test_vs.glsl: 
+  
+  ¿cómo se transforma la posición de cada vértice?
+  
+  	gl_Position =  proj * view * model * vec4 (vertex_position, 1.0);
+	
+  ¿en qué espacio está vertex_position?: En espacio local al objeto 
+  ¿en qué espacio está gl_Position?: En espacio de pantalla.
+  
+  Analiza los pasos:
+  1.1  3d->4d vertex_position (3D) se convierte en coordenadas homogeneas (4D) y está aún en espacio local de objeto (local space)
+  1.2  local->world se multiplica por la matriz model (la matriz del objeto en el mundo) cambia a espacio de mundo (world space)
+  1.3  world->view se multiplica por view (recuerda que esta es la inversa de la matriz de la cámara) y cambia a espacio de cámara (con respecto a la cámara, como si la cámara estuviera en el 0,0,0 mirando -Z)
+  1.4  view->cube se multiplica por proj y pasa a espacio normalizado (un cubo de -1 a 1 en el que cabe toda la escena)
+  1.5  cube->screen después, tras el pixel shader, las coordenadas se convierten a 2D y se multiplican por la resolución (espacio de pantalla)
+  
+  Esta es la clave: tienes que hacer estos pasos al revés: dada una coordenada 2D de ratón, hay que:
+  
+  1.1 screen->cube convierte las coordenadas de ratón [(0,ScreenX), (0,ScreenY)]  en coordenadas de cubo [(-1,1),(-1,1)]. El rango debe ser
+  
+    x = de -1 (izquierda de la pantalla) a 1 (derecha de la pantalla)
+	y = de -1 (abajo de la pantalla) a 1 (arriba de la pantalla)
+	z = -1
+	
+	  ¿por qué ponemos -1 en z? (Al plano cercano de la cámara near) ¿y si pusiéramos +1? (al plano lejano)
+	  monta todo esto en una posición homogénea (4D) con la coordenada w a 1
+	  
+  1.2 cube->view multiplicar por la inversa de proj y pasa a espacio de cámara.
+  
+	  homogeiniza la posición resultante porque quedará con w > 1 tras la deproyección
+	  
+  1.3 view->world multiplica por la inversa de view y pasa a espacio de mundo
+  
+   ya está!
+   
+   
+  2. Ahora vas a trazar un rayo desde la cámara hacia la escena para saber con qué figura 3D choca primero. Queremos seleccionar la figura que caiga en la posición del ratón. Sabemos la posición del ratón en el plano cercano de la cámara (lo acabas de calcular), y también la posición de la cámara, ambos en espacio de mundo. Monta un rayo que vaya desde la posición de la cámara hacia la posición del ratón en espacio de mundo 3D, y comprueba que puedes seleccionar una esfera utilizando la rutina raySphereIntersection (solución incluida)
+  
+  3. intenta entender lo que está haciendo la rutina a partir de la documentación incluida en el comentario del código de la función
+  
+  4. ahora copia y pega el código de raySphereIntersection, y sustituye el cuerpo por una solución geométrica. ¿cuál de las dos es más natural para ti?
+  
+  Entregable:
+  
+  Un video con tus compañeros, con cámara del móvil, p.ej., comentando la solución, mostrando las partes de código adecuadas y los detalles más importantes de implementación. Debe mostrar:
+  
+   - Los integrantes del grupo (pueden ser solo voz)
+   - El programa en ejecución realizando las tareas que se solicitan en la práctica.
+   - Una breve explicación del código escrito para la solución de la práctica.
+   
+  El código en blackboard.
