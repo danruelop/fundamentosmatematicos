@@ -41,8 +41,8 @@ Practica 3
   1.1 screen->cube convierte las coordenadas de ratón [(0,ScreenX), (0,ScreenY)]  en coordenadas de cubo [(-1,1),(-1,1)]. El rango debe ser
   
     x = de -1 (izquierda de la pantalla) a 1 (derecha de la pantalla)
-	y = de -1 (abajo de la pantalla) a 1 (arriba de la pantalla)
-	z = -1
+    y = de -1 (abajo de la pantalla) a 1 (arriba de la pantalla)
+    z = -1
 	
 	  ¿por qué ponemos -1 en z? (Al plano cercano de la cámara near) ¿y si pusiéramos +1? (al plano lejano)
 	  monta todo esto en una posición homogénea (4D) con la coordenada w a 1

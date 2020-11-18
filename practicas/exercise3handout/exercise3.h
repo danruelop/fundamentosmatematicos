@@ -54,7 +54,6 @@ struct Exercise3 {
 		
 
 		coord_x_mouse -= 1.f; coord_y_mouse -= 1.f; //para luego restar ambas por -1 y que queden como los límites: -1 y 1 como se pide en el ejercicio.
-		//coord_y_mouse = -coord_y_mouse;
 
 		vec4 sol = vec4(coord_x_mouse, coord_y_mouse, -1, 1);
 
@@ -144,6 +143,7 @@ struct Exercise3 {
 }
 
 	// GEOMETRIC SOLUTION
+	// Me parece más natural la solución geométrica porque soy capaz de verlo mejor espacialmente y comprenderlo.
 	static bool raySphereIntersection(const Ray& ray, vec3 C, float r, float* intersection_distance) {
 
 		const vec3& A = ray.origin;
